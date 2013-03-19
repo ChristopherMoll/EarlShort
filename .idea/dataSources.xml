@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" compressed="false" hash="4235194486" />
+  <component name="DataSourceManagerImpl" format="xml" hash="4063987837">
+    <data-source source="LOCAL" name="Symfony" product="MySQL" version="5.5.29-0ubuntu0.12.04.2" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.24 ( Revision: ${bzr.revision-id} )" uuid="b1fb30b5-3535-49af-8fc3-89ad3eb8193b">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfcfdfc7dfc9dfc7dfdedfc7df9bdf9f</user-password>
+      <schema-pattern>earlshort.* symfony.*</schema-pattern>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Downloads/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
 </project>
 

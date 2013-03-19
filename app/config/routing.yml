@@ -5,3 +5,7 @@ earl_short_main:
 home:
     pattern:  /
     defaults: { _controller: EarlShortMainBundle:Default:index }
+
+redirect:
+    pattern: /{page}
+    defaults: { _controller: EarlShortMainBundle:Redirect:index }

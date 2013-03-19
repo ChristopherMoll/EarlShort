@@ -2,7 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="DBNavigator.Module.ConnectionManager">
     <connections>
-      <connection driver-library="$USER_HOME$/Downloads/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" active="true" os-authentication="false" id="8b76aecf-fd81-406d-8074-33b6109dba79" name="symfony" description="earlshort database" database-type="UNKNOWN" user="root" password="emcmtm15">
+      <connection driver-library="$USER_HOME$/Downloads/mysql-connector-java-5.1.24/mysql-connector-java-5.1.24-bin.jar" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/" active="true" os-authentication="false" id="8b76aecf-fd81-406d-8074-33b6109dba79" name="symfony" description="earlshort database" database-type="MYSQL" user="root" password="emcmtm15">
         <details>
           <charset value="UTF-8" />
           <auto-commit value="false" />
@@ -47,10 +47,10 @@
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar:///home/chrismoll/PhpstormProjects/EarlShort/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
         </CLASSES>
         <SOURCES>
-          <root url="phar:///home/chrismoll/PhpstormProjects/EarlShort/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
+          <root url="phar://$MODULE_DIR$/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar" />
         </SOURCES>
       </library>
     </orderEntry>
