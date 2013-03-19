@@ -2,10 +2,10 @@ earl_short_main:
     resource: "@EarlShortMainBundle/Resources/config/routing.yml"
     prefix:   /
 
-home:
-    pattern:  /
-    defaults: { _controller: EarlShortMainBundle:Default:index }
+#link:
+#    pattern:  /link
+#    defaults: { _controller: EarlShortMainBundle:Link }
 
-redirect:
-    pattern: /{page}
-    defaults: { _controller: EarlShortMainBundle:Redirect:index }
+#redirect:
+#    pattern: /{page}
+#    defaults: { _controller: EarlShortMainBundle:Redirect:index }
