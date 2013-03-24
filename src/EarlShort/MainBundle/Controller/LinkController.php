@@ -41,6 +41,7 @@ class LinkController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setCreated()->setUpdated()->setVisitCount(0);
             $em->persist($entity);
             $em->flush();
 
@@ -77,6 +78,9 @@ class LinkController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EarlShortMainBundle:Link')->find($id);
+        $entity->setVisitCount();
+        $em->persist($entity);
+        $em->flush();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Link entity.');

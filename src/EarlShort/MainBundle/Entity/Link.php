@@ -116,13 +116,11 @@ class Link
     /**
      * Set created
      *
-     * @param \DateTime $created
      * @return Link
      */
-    public function setCreated($created)
+    public function setCreated()
     {
-        $this->created = $created;
-    
+        $this->created = new \DateTime();
         return $this;
     }
 
@@ -139,12 +137,11 @@ class Link
     /**
      * Set updated
      *
-     * @param \DateTime $updated
      * @return Link
      */
-    public function setUpdated($updated)
+    public function setUpdated()
     {
-        $this->updated = $updated;
+        $this->updated = new \DateTime();
     
         return $this;
     }
@@ -153,6 +150,8 @@ class Link
      * Get updated
      *
      * @return \DateTime 
+     *
+     * @ORM\PrePersist
      */
     public function getUpdated()
     {
@@ -162,13 +161,16 @@ class Link
     /**
      * Set visitCount
      *
-     * @param integer $visitCount
+     * @param int $count
+     *
      * @return Link
      */
-    public function setVisitCount($visitCount)
+    public function setVisitCount($count=null)
     {
-        $this->visitCount = $visitCount;
-    
+        if($count===null)
+            $this->visitCount++;
+        else $this->visitCount = $count;
+
         return $this;
     }
 
