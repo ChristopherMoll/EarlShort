@@ -41,7 +41,7 @@ class LinkController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity->setCreated()->setUpdated()->setVisitCount(0);
+            $entity->setCreator($this->getUser())->setCreated()->setUpdated()->setVisitCount(0);
             $em->persist($entity);
             $em->flush();
 

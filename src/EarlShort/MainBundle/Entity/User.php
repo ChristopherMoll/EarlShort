@@ -4,6 +4,7 @@ namespace EarlShort\MainBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -27,7 +28,14 @@ class User extends BaseUser
      */
     protected $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Link", mappedBy="creator")
+     */
+    protected $links;
 
+    public function __construct() {
+        $this->links = new ArrayCollection();
+    }
 
     public function getName() {
         return $this->name;
@@ -35,6 +43,14 @@ class User extends BaseUser
 
     public function setName($name) {
         $this->name = $name;
+    }
+
+    public function getLinks() {
+        return $this->links;
+    }
+
+    public function setLinks($links) {
+        $this->links = $links;
     }
 
 

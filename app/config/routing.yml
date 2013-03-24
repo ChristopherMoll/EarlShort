@@ -25,6 +25,6 @@ earl_short_main:
 #    pattern:  /link
 #    defaults: { _controller: EarlShortMainBundle:Link }
 
-#redirect:
-#    pattern: /{page}
-#    defaults: { _controller: EarlShortMainBundle:Redirect:index }
+redirect:
+    pattern: /{page}
+    defaults: { _controller: EarlShortMainBundle:Redirect:index }

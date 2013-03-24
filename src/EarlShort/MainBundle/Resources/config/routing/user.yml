@@ -1,0 +1,21 @@
+user:
+    pattern:  /
+    defaults: { _controller: "EarlShortMainBundle:User:index" }
+
+user_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EarlShortMainBundle:User:show" }
+
+user_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EarlShortMainBundle:User:edit" }
+
+user_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EarlShortMainBundle:User:update" }
+    requirements: { _method: post|put }
+
+user_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EarlShortMainBundle:User:delete" }
+    requirements: { _method: post|delete }

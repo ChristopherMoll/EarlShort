@@ -3,6 +3,7 @@
 namespace EarlShort\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use EarlShort\MainBundle\Entity\User as User;
 
 /**
  * Link
@@ -56,6 +57,14 @@ class Link
      */
     private $visitCount;
 
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="links")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
+     */
+    protected $creator;
 
     /**
      * Get id
@@ -182,5 +191,28 @@ class Link
     public function getVisitCount()
     {
         return $this->visitCount;
+    }
+
+    /**
+     * Set Creator
+     *
+     * @param User $creator
+     *
+     * @return Link
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
+        return $this;
+    }
+
+    /**
+     * Get Creator
+     *
+     * @return User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
     }
 }
