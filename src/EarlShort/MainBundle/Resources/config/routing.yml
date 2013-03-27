@@ -1,0 +1,23 @@
+EarlShortMainBundle_link:
+        resource: "@EarlShortMainBundle/Resources/config/routing/link.yml"
+        prefix:   /link
+
+EarlShortMainBundle_user:
+        resource: "@EarlShortMainBundle/Resources/config/routing/user.yml"
+        prefix:   /user
+
+earl_short_main_homepage:
+    pattern:  /
+    defaults: { _controller: EarlShortMainBundle:Default:index }
+
+earl_short_login:
+    pattern:  /login
+    defaults: { _controller: EarlShortMainBundle:Login:index }
+
+earl_short_login_check:
+    pattern:  /login_check
+    defaults: { _controller: EarlShortMainBundle:Login:check }
+
+earl_short_logout:
+    pattern:  /logout
+    defaults: { _controller: EarlShortMainBundle:Login:logout }

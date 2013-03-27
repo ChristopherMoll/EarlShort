@@ -1,0 +1,12 @@
+parameters:
+#    earl_short_main.example.class: EarlShort\MainBundle\Example
+
+services:
+    earlshort_user.registration.form.type:
+        class: EarlShort\MainBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: earlshort_user_registration }
+#    earl_short_main.example:
+#        class: %earl_short_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

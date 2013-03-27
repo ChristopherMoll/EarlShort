@@ -1,0 +1,30 @@
+link:
+    pattern:  /
+    defaults: { _controller: "EarlShortMainBundle:Link:index" }
+
+link_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EarlShortMainBundle:Link:show" }
+
+link_new:
+    pattern:  /new
+    defaults: { _controller: "EarlShortMainBundle:Link:new" }
+
+link_create:
+    pattern:  /create
+    defaults: { _controller: "EarlShortMainBundle:Link:create" }
+    requirements: { _method: post }
+
+link_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EarlShortMainBundle:Link:edit" }
+
+link_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EarlShortMainBundle:Link:update" }
+    requirements: { _method: post|put }
+
+link_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EarlShortMainBundle:Link:delete" }
+    requirements: { _method: post|delete }
