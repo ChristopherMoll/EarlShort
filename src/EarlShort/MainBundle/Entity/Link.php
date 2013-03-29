@@ -4,6 +4,8 @@ namespace EarlShort\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EarlShort\MainBundle\Entity\User as User;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Link
@@ -33,6 +35,7 @@ class Link
      * @var string
      *
      * @ORM\Column(name="destination", type="text")
+     * @Assert\Url()
      */
     private $destination;
 
