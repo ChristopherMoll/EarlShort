@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% stylesheets 'bundles/earlshortmain/css/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
+            <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
         {% endstylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -22,29 +23,32 @@
                         <ul class="nav">
                             <li>
                                 <a href="#">
-                                    Menu Item
-                                    <span class="navbar-unread">1</span>
+                                    Home
                                 </a>
                             </li>
-                            <li class="active">
+                            <li>
                                 <a href="#">
-                                    Messages
-                                    <span class="navbar-unread">1</span>
+                                    Custom
                                 </a>
 
                             </li>
                             <li>
                                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                                    <a href="{{ path('fos_user_security_logout') }}">
-                                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                     |
+                                    <a href="#">
+                                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                                     </a>
+                                        <ul>
+                                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                                            <li><a href="#">Test</a></li>
+                                        </ul>
+
+
                                 {% else %}
                                     <a href="{{ path('fos_user_security_login') }}">
                                         {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
                                     </a>
                                 {% endif %}
-                                    <span class="navbar-unread">1</span>
                             </li>
                         </ul>
                     </div><!--/.nav-collapse -->
@@ -76,5 +80,11 @@
     {% javascripts '@EarlShortMainBundle/Resources/public/js/*' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(
+            $('.date').datepicker({ dateFormat: 'dd-mm-yy' })
+        );
+    </script>
     </body>
 </html>

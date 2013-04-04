@@ -2532,6 +2532,15 @@ body.vjs-full-window {
 .mll, .mhl, .mal {
   margin-left: 20px; }
 
+body {
+    background-color: #1abc9c;
+}
+
+.login-screen {
+    width: 30%;
+    margin: 0px auto;
+}
+
 .error-item {
     color: #c0392b;
 }

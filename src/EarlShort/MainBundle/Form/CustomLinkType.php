@@ -6,12 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class LinkType extends AbstractType
+class CustomLinkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('path')
             ->add('destination')
+            ->add('expiration','date',array(
+                'data' => new \DateTime('tomorrow'),
+                'attr' => array('class' => 'date'),
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+
+            ))
+            ->add('visitLimit')
         ;
     }
 

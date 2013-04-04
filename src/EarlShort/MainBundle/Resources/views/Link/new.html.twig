@@ -1,20 +1,21 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Link creation</h1>
-
-    <form action="{{ path('link_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('link') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% block body %}
+    <div class="login-screen">
+        <form action="{{ path('link_custom') }}" method="post" {{ form_enctype(form) }}>
+            <div class="login-form">
+                <div class="control-group">
+                    {{ form_widget(form) }}
+                    <input type="submit" id="_submit" name="_submit" class="btn btn-large btn-primary btn-block" value="Shorten" />
+                </div>
+                {#<a href="#" class="login-link">Lost your password?</a>#}
+            </div>
+            {#</form>#}
+            {#<form action="{{ path('link_create') }}" method="post" {{ form_enctype(form) }}>#}
+            {#{{ form_widget(form) }}#}
+            {#<p>#}
+            {#<button type="submit">Shorten</button>#}
+            {#</p>#}
+        </form>
+    </div>
 {% endblock %}
