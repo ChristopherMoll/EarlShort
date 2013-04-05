@@ -59,7 +59,7 @@ class Link
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="expiration", type="datetime")
+     * @ORM\Column(name="expiration", type="datetime", nullable=true)
      * @Assert\DateTime()
      */
     private $expiration;
@@ -74,7 +74,7 @@ class Link
     /**
      * @var integer
      *
-     * @ORM\Column(name="visitLimit", type="integer")
+     * @ORM\Column(name="visitLimit", type="integer", nullable=true)
      * @Assert\Range(
      *      min = "0",
      *      max = "1000",
@@ -305,15 +305,21 @@ class Link
         return substr(md5(microtime()), 0, $length);
     }
 
+    /**
+     * Check Expiration
+     *
+     * @return boolean
+     */
     public function isExpired()
     {
-        if($this->getVisitCount() > $this->getVisitLimit())
-            return true;
+        if($this->getVisitLimit() > 0) {
+            return ($this->getVisitCount() > $this->getVisitLimit());
+        }
+
+        if($this->getExpiration() == null)
+            return false;
 
         $now = new DateTime();
-        if($now >= $this->getExpiration())
-            return true;
-
-        return false;
+        return $now >= $this->getExpiration();
     }
 }

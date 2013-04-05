@@ -18,6 +18,7 @@ class CustomLinkType extends AbstractType
                 'attr' => array('class' => 'date'),
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
+                'years'  => range(date('Y'), date('Y') + 1),
 
             ))
             ->add('visitLimit')

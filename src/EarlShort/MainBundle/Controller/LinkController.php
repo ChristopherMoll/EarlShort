@@ -44,9 +44,15 @@ class LinkController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $entity->setCreator($this->getUser());
-            $entity->setPath()->setCreated()->setUpdated()->setVisitCount(0);
+            $entity->setPath()->setCreated()->setUpdated()->setVisitCount(0)->setVisitLimit(0);
             $em->persist($entity);
             $em->flush();
+
+            if($request->isXmlHttpRequest()) {
+                return $this->render('EarlShortMainBundle:Link:ajax.html.twig', array(
+                    'path' => $this->generateUrl('redirect', array('page' => $entity->getPath()), true),
+                ));
+            }
 
             return $this->redirect($this->generateUrl('link_show', array('id' => $entity->getId())));
         }
@@ -55,6 +61,25 @@ class LinkController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
+    }
+
+    public function shortenAction(Request $request)
+    {
+        $entity  = new Link();
+        $form = $this->createForm(new LinkType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $entity->setCreator($this->getUser());
+            $entity->setPath()->setCreated()->setUpdated()->setVisitCount(0);
+            $em->persist($entity);
+            $em->flush();
+
+            return $entity->getPath();
+        }
+        return "error";
     }
 
     /**
@@ -215,9 +240,4 @@ class LinkController extends Controller
         ;
     }
 
-    private function getAnonymousUser() {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository('EarlShortMainBundle:User')->find(1);
-    }
 }

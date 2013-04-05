@@ -19,7 +19,7 @@ class RedirectController extends Controller
         $link = $repository->findOneBy(array('path' => $page));
 
         if($link->isExpired())
-            throw $this->createNotFoundException('This page does not exist');
+            throw $this->createNotFoundException('This page has expired');
 
         $link->setVisitCount();
         $em->persist($link);

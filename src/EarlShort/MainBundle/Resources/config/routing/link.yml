@@ -33,3 +33,8 @@ link_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "EarlShortMainBundle:Link:delete" }
     requirements: { _method: post|delete }
+
+link_shorten:
+    pattern: /shorten
+    defaults: { _controller: "EarlShortMainBundle:Link:shorten" }
+    requirements: { _method: post }
