@@ -4,12 +4,17 @@ namespace EarlShort\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use EarlShort\MainBundle\Entity\User as User;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use DateTime as DateTime;
+
 
 /**
  * Link
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EarlShort\MainBundle\Entity\LinkRepository")
+ * @UniqueEntity(fields="path",message="Sorry, that path is already taken.")
  */
 class Link
 {
@@ -25,7 +30,7 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255, unique=true)
      */
     private $path;
 
@@ -33,22 +38,31 @@ class Link
      * @var string
      *
      * @ORM\Column(name="destination", type="text")
+     * @Assert\Url(message="Please enter a valid URL.")
      */
     private $destination;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated", type="datetime")
      */
     private $updated;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="expiration", type="datetime", nullable=true)
+     * @Assert\DateTime()
+     */
+    private $expiration;
 
     /**
      * @var integer
@@ -57,12 +71,24 @@ class Link
      */
     private $visitCount;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="visitLimit", type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = "0",
+     *      max = "1000",
+     *      minMessage = "The visitor limit must be positive, or 0 for unlimited.",
+     *      maxMessage = "Please enter a number between 0 and {{ limit }}."
+     * )
+     */
+    private $visitLimit;
 
     /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="links")
-     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=true)
      */
     protected $creator;
 
@@ -82,9 +108,12 @@ class Link
      * @param string $path
      * @return Link
      */
-    public function setPath($path)
+    public function setPath($path=null)
     {
-        $this->path = $path;
+        if($path === null)
+            $this->path = $this->generatePath();
+        else
+            $this->path = $path;
     
         return $this;
     }
@@ -129,14 +158,14 @@ class Link
      */
     public function setCreated()
     {
-        $this->created = new \DateTime();
+        $this->created = new DateTime();
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return DateTime 
      */
     public function getCreated()
     {
@@ -150,7 +179,7 @@ class Link
      */
     public function setUpdated()
     {
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     
         return $this;
     }
@@ -158,13 +187,37 @@ class Link
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return DateTime 
      *
      * @ORM\PrePersist
      */
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set expiration
+     * 
+     * @param DateTime $expiration
+     * @return Link
+     */
+    public function setExpiration(DateTime $expiration)
+    {
+        $this->expiration = $expiration;
+        
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return DateTime
+     *
+     */
+    public function getExpiration()
+    {
+        return $this->expiration;
     }
 
     /**
@@ -194,13 +247,37 @@ class Link
     }
 
     /**
+     * Set visitLimit
+     *
+     * @param int $limit
+     *
+     * @return Link
+     */
+    public function setVisitLimit($limit=0)
+    {
+        $this->visitLimit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Get visitLimit
+     *
+     * @return integer
+     */
+    public function getVisitLimit()
+    {
+        return $this->visitLimit;
+    }
+
+    /**
      * Set Creator
      *
      * @param User $creator
      *
      * @return Link
      */
-    public function setCreator(User $creator)
+    public function setCreator(User $creator = null)
     {
         $this->creator = $creator;
         return $this;
@@ -214,5 +291,35 @@ class Link
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Generate Path
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    private function generatePath($length=5)
+    {
+        return substr(md5(microtime()), 0, $length);
+    }
+
+    /**
+     * Check Expiration
+     *
+     * @return boolean
+     */
+    public function isExpired()
+    {
+        if($this->getVisitLimit() > 0) {
+            return ($this->getVisitCount() > $this->getVisitLimit());
+        }
+
+        if($this->getExpiration() == null)
+            return false;
+
+        $now = new DateTime();
+        return $now >= $this->getExpiration();
     }
 }

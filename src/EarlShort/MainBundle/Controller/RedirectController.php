@@ -17,8 +17,15 @@ class RedirectController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('EarlShortMainBundle:Link');
         $link = $repository->findOneBy(array('path' => $page));
+
+        if($link->isExpired())
+            throw $this->createNotFoundException('This page has expired');
+
+        $link->setVisitCount();
+        $em->persist($link);
+        $em->flush();
         $destination = $link->getDestination();
-        return $this->redirect("http://www.google.com".'/'.$destination);
+        return $this->redirect($destination);
 
     }
 

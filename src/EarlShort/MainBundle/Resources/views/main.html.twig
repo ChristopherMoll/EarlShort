@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+{% block title %}
+    EarlShort!
+{% endblock %}
+{% stylesheets 'bundles/earlshortmain/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}

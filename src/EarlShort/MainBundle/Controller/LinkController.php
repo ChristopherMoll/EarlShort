@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use EarlShort\MainBundle\Entity\Link;
+use EarlShort\MainBundle\Form\CustomLinkType;
 use EarlShort\MainBundle\Form\LinkType;
 
 /**
@@ -30,13 +31,66 @@ class LinkController extends Controller
     }
 
     /**
-     * Creates a new Link entity.
+     * Creates a new Link entity with a random path.
      *
      */
     public function createAction(Request $request)
     {
         $entity  = new Link();
         $form = $this->createForm(new LinkType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $entity->setCreator($this->getUser());
+            $entity->setPath()->setCreated()->setUpdated()->setVisitCount(0)->setVisitLimit(0);
+            $em->persist($entity);
+            $em->flush();
+
+            if($request->isXmlHttpRequest()) {
+                return $this->render('EarlShortMainBundle:Link:ajax.html.twig', array(
+                    'path' => $this->generateUrl('redirect', array('page' => $entity->getPath()), true),
+                ));
+            }
+
+            return $this->redirect($this->generateUrl('link_show', array('id' => $entity->getId())));
+        }
+
+        return $this->render('EarlShortMainBundle:Default:index.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+    public function shortenAction(Request $request)
+    {
+        $entity  = new Link();
+        $form = $this->createForm(new LinkType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $entity->setCreator($this->getUser());
+            $entity->setPath()->setCreated()->setUpdated()->setVisitCount(0);
+            $em->persist($entity);
+            $em->flush();
+
+            return $entity->getPath();
+        }
+        return "error";
+    }
+
+    /**
+     * Creates a new Link entity with a custom path.
+     *
+     */
+
+    public function customAction(Request $request)
+    {
+        $entity  = new Link();
+        $form = $this->createForm(new CustomLinkType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -61,7 +115,7 @@ class LinkController extends Controller
     public function newAction()
     {
         $entity = new Link();
-        $form   = $this->createForm(new LinkType(), $entity);
+        $form   = $this->createForm(new CustomLinkType(), $entity);
 
         return $this->render('EarlShortMainBundle:Link:new.html.twig', array(
             'entity' => $entity,
@@ -78,9 +132,7 @@ class LinkController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EarlShortMainBundle:Link')->find($id);
-        $entity->setVisitCount();
-        $em->persist($entity);
-        $em->flush();
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Link entity.');
@@ -187,4 +239,5 @@ class LinkController extends Controller
             ->getForm()
         ;
     }
+
 }
